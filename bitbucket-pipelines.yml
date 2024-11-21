@@ -5,48 +5,50 @@ pipelines:
     - step:
         name: "Instalar dependências"
         caches:
-          - pip  # Cache das dependências para otimizar as execuções
+          - pip
         script:
-          - pip install -r requirements.txt  # Instalar pacotes listados no requirements.txt
+          - pip install -r requirements.txt
 
     - step:
         name: "Verificação de Qualidade de Código"
         script:
-          - pip install flake8  # Instalar flake8
-          - flake8 .  # Rodar flake8 para verificar qualidade do código
+          - pip install flake8
+          - flake8 .
 
     - step:
         name: "Rodar Testes"
         script:
-          - python -m unittest discover  # Rodar testes unitários
+          - python -m unittest discover
 
     - step:
         name: "Configurar Permissão para Deploy"
         script:
-          - chmod +x deploy.sh  # Garantir permissão de execução para o script deploy.sh
+          - chmod +x deploy.sh
 
     - step:
         name: "Deploy"
         script:
-          - ./deploy.sh  # Executar o script de deploy
+          - ./deploy.sh
 
+    # Step manual de notificação
     - step:
         name: "Notificar Sucesso no Slack"
+        trigger: manual  # Tornando este step manual
         script:
-          - curl -X POST --data-urlencode 'payload={"text":"Pipeline de Deploy finalizado com sucesso"}' https://hooks.slack.com/services/SEU/WEBHOOK  # Notificar no Slack
+          - curl -X POST --data-urlencode 'payload={"text":"Pipeline de Deploy finalizado com sucesso"}' https://hooks.slack.com/services/SEU/WEBHOOK
 
   branches:
     main:
       - step:
           name: "Deploy para Main"
           script:
-            - chmod +x deploy.sh  # Garantir permissões de execução do script deploy.sh
-            - ./deploy.sh  # Executar o script de deploy para a branch main
+            - chmod +x deploy.sh
+            - ./deploy.sh
 
   tags:
     "v*":
       - step:
           name: "Deploy para Produção"
           script:
-            - chmod +x deploy.sh  # Garantir permissões de execução do script deploy.sh
-            - ./deploy.sh  # Executar o script de deploy para tags de versão
+            - chmod +x deploy.sh
+            - ./deploy.sh
