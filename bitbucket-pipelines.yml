@@ -24,4 +24,5 @@ pipelines:
       - step:
           name: "Deploy"
           script:
-            - ./deploy.sh  # Script de deploy que você criará posteriormente
+            - chmod +x deploy.sh  # Garantir permissões de execução do script deploy.sh
+            - ./deploy.sh         # Executar o script de deploy
