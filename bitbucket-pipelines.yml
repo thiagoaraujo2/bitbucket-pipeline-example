@@ -5,34 +5,43 @@ pipelines:
     - step:
         name: "Instalar dependências"
         caches:
-          - pip
+          - pip  # Cache das dependências para otimizar as execuções
         script:
-          - pip install -r requirements.txt
+          - pip install -r requirements.txt  # Instalar pacotes listados no requirements.txt
+
     - step:
         name: "Verificação de Qualidade de Código"
         script:
-          - pip install flake8
-          - flake8 .
+          - pip install flake8  # Instalar flake8
+          - flake8 .  # Rodar flake8 para verificar qualidade do código
+
     - step:
         name: "Rodar Testes"
         script:
-          - python -m unittest discover
+          - python -m unittest discover  # Rodar testes unitários
+
+    - step:
+        name: "Configurar Permissão para Deploy"
+        script:
+          - chmod +x deploy.sh  # Garantir permissão de execução para o script deploy.sh
+
     - step:
         name: "Deploy"
         script:
-          - chmod +x deploy.sh
-          - ./deploy.sh
+          - ./deploy.sh  # Executar o script de deploy
+
     - step:
-        name: "Notificar Sucesso no Slack" # Caso tenha, para fazer integração
+        name: "Notificar Sucesso no Slack"
         script:
-          - curl -X POST --data-urlencode 'payload={"text":"Pipeline de Deploy finalizado com sucesso"}' https://hooks.slack.com/services/SEU/WEBHOOK
+          - curl -X POST --data-urlencode 'payload={"text":"Pipeline de Deploy finalizado com sucesso"}' https://hooks.slack.com/services/SEU/WEBHOOK  # Notificar no Slack
 
   branches:
     main:
       - step:
-          name: "Deploy"
+          name: "Deploy para Main"
           script:
-            - ./deploy.sh
+            - chmod +x deploy.sh  # Garantir permissões de execução do script deploy.sh
+            - ./deploy.sh  # Executar o script de deploy para a branch main
 
   tags:
     "v*":
@@ -40,4 +49,4 @@ pipelines:
           name: "Deploy para Produção"
           script:
             - chmod +x deploy.sh  # Garantir permissões de execução do script deploy.sh
-            - ./deploy.sh         # Executar o script de deploy
+            - ./deploy.sh  # Executar o script de deploy para tags de versão
