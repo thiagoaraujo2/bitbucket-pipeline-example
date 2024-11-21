@@ -23,7 +23,7 @@ pipelines:
           - chmod +x deploy.sh
           - ./deploy.sh
     - step:
-        name: "Notificar Sucesso no Slack"
+        name: "Notificar Sucesso no Slack" # Caso tenha, para fazer integração
         script:
           - curl -X POST --data-urlencode 'payload={"text":"Pipeline de Deploy finalizado com sucesso"}' https://hooks.slack.com/services/SEU/WEBHOOK
 
@@ -39,4 +39,5 @@ pipelines:
       - step:
           name: "Deploy para Produção"
           script:
-            - ./deploy-prod.sh
+            - chmod +x deploy.sh  # Garantir permissões de execução do script deploy.sh
+            - ./deploy.sh         # Executar o script de deploy
