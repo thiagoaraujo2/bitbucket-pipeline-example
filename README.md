@@ -1,45 +1,103 @@
-**Edit a file, create a new file, and clone from Bitbucket in under 2 minutes**
+# Bitbucket Pipeline Example
 
-When you're done, you can delete the content in this README and update the file with details for others getting started with your repository.
+Este projeto demonstra a configuração de um pipeline CI/CD usando o Bitbucket para realizar as seguintes etapas:
 
-*We recommend that you open this README in another tab as you perform the tasks below. You can [watch our video](https://youtu.be/0ocf7u76WSo) for a full demo of all the steps in this tutorial. Open the video in a new tab to avoid leaving Bitbucket.*
-
----
-
-## Edit a file
-
-You’ll start by editing this README file to learn how to edit a file in Bitbucket.
-
-1. Click **Source** on the left side.
-2. Click the README.md link from the list of files.
-3. Click the **Edit** button.
-4. Delete the following text: *Delete this line to make a change to the README from Bitbucket.*
-5. After making your change, click **Commit** and then **Commit** again in the dialog. The commit page will open and you’ll see the change you just made.
-6. Go back to the **Source** page.
+1. **Instalação de dependências**: Configura o ambiente Python e instala os pacotes necessários.
+2. **Verificação de qualidade de código**: Usa o `flake8` para garantir o padrão de qualidade.
+3. **Execução de testes unitários**: Utiliza o `unittest` para rodar os testes.
+4. **Deploy automatizado**: Configura permissões e executa um script de deploy.
+5. **Notificação no Slack**: Envia uma mensagem no Slack após o sucesso do pipeline.
+6. **Steps manuais**: Inclui ações que podem ser disparadas manualmente, como notificações ou deploys adicionais.
 
 ---
 
-## Create a file
+## Como Usar Este Projeto
 
-Next, you’ll add a new file to this repository.
+### 1. Pré-requisitos
+Certifique-se de ter:
+- Git instalado.
+- Uma conta no GitHub e no Bitbucket.
+- Webhook do Slack configurado (caso utilize o step de notificação).
 
-1. Click the **New file** button at the top of the **Source** page.
-2. Give the file a filename of **contributors.txt**.
-3. Enter your name in the empty file space.
-4. Click **Commit** and then **Commit** again in the dialog.
-5. Go back to the **Source** page.
+### 2. Clone o Repositório
+```bash
+git clone https://github.com/thiagoaraujo2/bitbucket-pipeline-example.git
+cd bitbucket-pipeline-example
 
-Before you move on, go ahead and explore the repository. You've already seen the **Source** page, but check out the **Commits**, **Branches**, and **Settings** pages.
+### 3. Configuração do Pipeline
+No arquivo bitbucket-pipelines.yml, configure os seguintes itens conforme necessário:
 
----
+- Dependências no arquivo requirements.txt.
+- Script de deploy (deploy.sh).
+- Webhook do Slack no step de notificação.
 
-## Clone a repository
+## 4. Executando Localmente
 
-Use these steps to clone from SourceTree, our client for using the repository command-line free. Cloning allows you to work on your files locally. If you don't yet have SourceTree, [download and install first](https://www.sourcetreeapp.com/). If you prefer to clone from the command line, see [Clone a repository](https://confluence.atlassian.com/x/4whODQ).
+Para testar o pipeline antes de rodar no Bitbucket:
 
-1. You’ll see the clone button under the **Source** heading. Click that button.
-2. Now click **Check out in SourceTree**. You may need to create a SourceTree account or log in.
-3. When you see the **Clone New** dialog in SourceTree, update the destination path and name if you’d like to and then click **Clone**.
-4. Open the directory you just created to see your repository’s files.
+1. Instale as dependências:
+pip install -r requirements.txt
 
-Now that you're more familiar with your Bitbucket repository, go ahead and add a new file locally. You can [push your change back to Bitbucket with SourceTree](https://confluence.atlassian.com/x/iqyBMg), or you can [add, commit,](https://confluence.atlassian.com/x/8QhODQ) and [push from the command line](https://confluence.atlassian.com/x/NQ0zDQ).# bitbucket-pipeline-example
+2. Rode os testes unitários:
+python -m unittest discover
+
+3. Verifique o estilo do código:
+flake8 .
+
+## 5. Deploy
+
+Certifique-se de que o script deploy.sh está configurado e com permissões de execução:
+ - chmod +x deploy.sh
+ - ./deploy.sh
+
+## Estrutura do Projeto
+
+bitbucket-pipeline-example/
+├── deploy.sh                # Script de deploy automatizado
+├── requirements.txt         # Dependências do projeto
+├── bitbucket-pipelines.yml  # Configuração do pipeline no Bitbucket
+└── README.md                # Documentação do projeto
+
+## Configuração do Bitbucket Pipeline
+
+O pipeline é definido no arquivo bitbucket-pipelines.yml e contém os seguintes passos:
+
+## Etapas Automáticas
+
+- Instalar dependências: Instala os pacotes listados no requirements.txt.
+- Verificação de qualidade de código: Usa o flake8 para garantir boas práticas.
+- Testes unitários: Valida funcionalidades usando unittest.
+- Deploy automatizado: Executa o script deploy.sh.
+
+##Etapas Manuais
+
+- Notificação no Slack: Dispara uma mensagem manualmente ao Slack.
+- Deploy para Produção: Uma etapa manual para ambientes de produção.
+
+## Contribuição
+
+1. Faça um fork do repositório.
+
+2. Crie uma branch para sua feature:
+ - git checkout -b minha-feature
+
+3. Commit suas mudanças:
+ - git commit -m "Adiciona minha nova feature"
+
+4. Envie sua branch:
+ - git push origin minha-feature
+
+5. Abra um Pull Request.
+
+## Licença
+Este projeto está licenciado sob a MIT License.
+
+## Contato
+Criado por Thiago de Araujo. Entre em contato para mais informações:
+
+LinkedIn
+GitHub
+
+### Instruções
+- Substitua os links de contato com os seus reais.
+- Edite o conteúdo conforme necessário para atender aos requisitos específicos do projeto.
