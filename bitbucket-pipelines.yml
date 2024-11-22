@@ -20,35 +20,41 @@ pipelines:
         script:
           - python -m unittest discover
 
+    # Step manual para revisão de qualidade
     - step:
-        name: "Configurar Permissão para Deploy"
+        name: "Revisão Manual de Código"
+        trigger: manual
+        script:
+          - echo "Revisão manual de código iniciada"
+          - echo "Certifique-se de verificar os padrões de formatação e segurança."
+
+    # Step manual para deploy em ambiente de staging
+    - step:
+        name: "Deploy para Staging"
+        trigger: manual
         script:
           - chmod +x deploy.sh
+          - ./deploy.sh staging
 
+    # Step manual para deploy em produção
     - step:
-        name: "Deploy"
+        name: "Deploy para Produção"
+        trigger: manual
         script:
-          - ./deploy.sh
+          - chmod +x deploy.sh
+          - ./deploy.sh production
 
-    # Step manual de notificação
+    # Step manual para notificação de sucesso no Slack
     - step:
         name: "Notificar Sucesso no Slack"
-        trigger: manual  # Tornando este step manual
+        trigger: manual
         script:
-          - curl -X POST --data-urlencode 'payload={"text":"Pipeline de Deploy finalizado com sucesso"}' https://hooks.slack.com/services/SEU/WEBHOOK
+          - curl -X POST --data-urlencode 'payload={"text":"Pipeline finalizado com sucesso"}' https://hooks.slack.com/services/SEU/WEBHOOK
 
   branches:
     main:
       - step:
-          name: "Deploy para Main"
-          script:
-            - chmod +x deploy.sh
-            - ./deploy.sh
-
-  tags:
-    "v*":
-      - step:
-          name: "Deploy para Produção"
+          name: "Deploy Automático na Main"
           script:
             - chmod +x deploy.sh
             - ./deploy.sh
