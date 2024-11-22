@@ -95,8 +95,8 @@ Este projeto está licenciado sob a MIT License.
 ## Contato
 Criado por Thiago de Araujo. Entre em contato para mais informações:
 
-LinkedIn
-GitHub
+[LinkedIn}(https://linkedin.com/in/jtabdesigner)
+[GitHub](https://github.com/thiagoaraujo2)
 
 ### Instruções
 - Substitua os links de contato com os seus reais.
